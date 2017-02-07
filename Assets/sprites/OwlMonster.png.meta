@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3a7f48ddec64b484ab421d56d1b65a1e
-timeCreated: 1486483240
+timeCreated: 1486493503
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -9,6 +9,8 @@ TextureImporter:
     21300004: OwlMonster_2
     21300006: OwlMonster_3
     21300008: OwlMonster_4
+    21300010: OwlMonster_5
+    21300012: OwlMonster_6
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -40,7 +42,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 5
+  spriteExtrude: 4
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -102,10 +104,10 @@ TextureImporter:
       name: OwlMonster_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 435
-        width: 145
-        height: 149
+        x: 43
+        y: 432
+        width: 137
+        height: 141
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,10 +117,10 @@ TextureImporter:
       name: OwlMonster_1
       rect:
         serializedVersion: 2
-        x: 180
-        y: 435
-        width: 144
-        height: 151
+        x: 197
+        y: 432
+        width: 143
+        height: 141
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,10 +130,10 @@ TextureImporter:
       name: OwlMonster_2
       rect:
         serializedVersion: 2
-        x: 323
-        y: 432
-        width: 149
-        height: 158
+        x: 361
+        y: 436
+        width: 144
+        height: 137
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,23 +143,36 @@ TextureImporter:
       name: OwlMonster_3
       rect:
         serializedVersion: 2
-        x: 478
-        y: 436
-        width: 147
-        height: 154
+        x: 510
+        y: 432
+        width: 142
+        height: 142
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: OwlMonster_4
+      name: OwlMonster_5
       rect:
         serializedVersion: 2
-        x: 332
-        y: 221
-        width: 146
-        height: 155
+        x: 656
+        y: 435
+        width: 142
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: OwlMonster_6
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 225
+        width: 136
+        height: 140
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
