@@ -40,7 +40,7 @@ public class LevelEngine : MonoBehaviour {
 	public int timeBetweenMonsters = 5;
 	private bool waveStarted =false;
 
-	private int waitBetweenMonsters = 75;
+	private int waitBetweenMonsters = 150;
 	private int currWait = 0;
 
 	// Update is called once per frame
