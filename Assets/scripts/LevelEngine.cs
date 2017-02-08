@@ -11,6 +11,7 @@ public class LevelEngine : MonoBehaviour {
 
 	public GameObject goldText;
 	public GameObject healthText;
+	public GameObject waveNumberText;
 	protected ArrayList pathList;
 	protected ArrayList towerList;
 	protected ArrayList monsterWaves;
@@ -18,15 +19,18 @@ public class LevelEngine : MonoBehaviour {
 
 	protected ArrayList targetPathPoints;
 
-	int currWave = 0;
 	// Use this for initialization
-	void Start () {
+	protected void setup () {
+		Debug.Log ("Start");
+		updateGold ();
+		updateHealth ();
+		setupBackground ();
+		waveRoutine = sendWaves ();
+		setTotalWaves (0);
 	}
 
-	public void triggerWaves(){
-		for (int i = 0; i < monsterWaves.Count; i++) {
-			Invoke("sendWave", timeBetweenWaves*i);
-		}
+	public void setTotalWaves(int waveNumber){
+		waveNumberText.GetComponent<Text> ().text = waveNumber + "/" + monsterWaves.Count;
 	}
 
 	protected void setupBackground(){
@@ -34,50 +38,50 @@ public class LevelEngine : MonoBehaviour {
 		this.targetPathPoints = gridBoard.pathTargets;
 	}
 
-	public int timeBetweenWaves = 5000;
-	public int timeBetweenMonsters = 5;
-	private bool waveStarted =false;
-
-	private int waitBetweenMonsters = 100;
-	private int currWait = 0;
+	public int timeBetweenWaves = 50;
+	public float timeBetweenMonsters = 0.5f;
 
 	// Update is called once per frame
 	void Update () {
-		if (waveStarted) {
-			if (sendList.Count > 0 && currWait == waitBetweenMonsters) {
-				GameObject monster = (GameObject)sendList[0];
-				sendList.RemoveAt (0);
-				sendMonster (monster);
-				currWait = 0;
-			}
-			currWait++;
-		}
 	}
 
-	private void sendWave(){
-		Debug.Log ("Sending wave: " + currWave);
-		int currentWave = currWave;
-		currWave++;
-		if (currentWave < monsterWaves.Count) {
-			MonsterWave wave =(MonsterWave) monsterWaves [currentWave];
-			for (int i = 0; i < wave.totalMonsters; i++) {
-				sendList.Add (wave.monster);
-			}
+	IEnumerator waveRoutine;
 
-		}
-		waveStarted = true;
+	public void sendWave(){
+		Debug.Log ("Starting enum: " + waveRoutine);
+		StartCoroutine (waveRoutine);
 	}
 
+	public void pause(){
+		StopCoroutine (waveRoutine);
+	}
 
-	ArrayList sendList = new ArrayList();
+	private bool levelOver = false;
+
+
+	private IEnumerator sendWaves(){
+		Debug.Log ("Sending waves: "+monsterWaves.Count);
+		for (int i = 0; i < monsterWaves.Count; i++) {
+			yield return new WaitForSeconds(timeBetweenWaves);
+			MonsterWave wave = (MonsterWave)monsterWaves [i];
+			int monstersSent = 0;
+			setTotalWaves (i+1);
+			while (monstersSent <= wave.totalMonsters) {
+				yield return new WaitForSeconds(timeBetweenMonsters);
+				Debug.Log ("Sending monster");
+				sendMonster (wave.monster);
+				monstersSent++;
+			}
+		}
+		levelOver = true;
+	}
 
 	private void sendMonster(GameObject monster){
 		GameObject newMonster = Instantiate (monster, (Vector3)targetPathPoints[0], transform.rotation);
 		newMonster.GetComponent<MonsterScript> ().targetPoints = targetPathPoints;
 		newMonster.GetComponent<MonsterScript> ().levelEngine = this.gameObject.GetComponent<LevelEngine>();
 	}
-
-
+		
 	public void receiveGold(int value){
 		gold = gold + value;
 		updateGold ();
@@ -97,14 +101,24 @@ public class LevelEngine : MonoBehaviour {
 		goldText.GetComponent<Text>().text = ""+gold;
 	}
 
-
 	public void updateHealth(){
 		healthText.GetComponent<Text>().text = ""+health;
 	}
 
 	public void reduceHealth(int damage){
 		health = health - damage;
+		if (health <= 0) {
+			health = 0;
+		}
 		updateHealth ();
+		checkLosingGame ();
 	}
 
+
+	public void checkLosingGame(){
+		if (health <= 0) {
+			this.transform.FindChild("LosingText").gameObject.SetActive(true);
+			pause ();
+		}
+	}
 }

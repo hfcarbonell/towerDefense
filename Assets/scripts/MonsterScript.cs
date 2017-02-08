@@ -36,6 +36,8 @@ public class MonsterScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		animator = GetComponent<Animator> ();
+		triggerAnimationDirectionChange ((Vector3)targetPoints [0], (Vector3)targetPoints [1]);
+
 	}
 	
 	// Update is called once per frame
@@ -57,17 +59,19 @@ public class MonsterScript : MonoBehaviour {
 	}
 
 	public void triggerAnimationDirectionChange(Vector3 current, Vector3 next){
-		Vector3 diff = next - current;
-		if (diff.x > 0) {
-			animator.SetTrigger ("playerRight");
-		} else if (diff.x < 0) {
-			animator.SetTrigger ("playerLeft");
-		} else if (diff.y > 0) {
-			animator.SetTrigger ("playerUp");
-		} else {
-			animator.SetTrigger ("playerDown");
+		if (animator != null) {
+			Vector3 diff = next - current;
+			if (diff.x > 0) {
+				animator.SetTrigger ("playerRight");
+			} else if (diff.x < 0) {
+				animator.SetTrigger ("playerLeft");
+			} else if (diff.y > 0) {
+				animator.SetTrigger ("playerUp");
+			} else {
+				animator.SetTrigger ("playerDown");
+			}
+			Debug.Log ("vector change: " + diff);
 		}
-		Debug.Log ("vector change: " + diff);
 	}
 
 }

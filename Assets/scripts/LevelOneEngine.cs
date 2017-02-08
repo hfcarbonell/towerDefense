@@ -38,8 +38,8 @@ public class LevelOneEngine : LevelEngine
 		monsterWaves.Add (new MonsterWave (4, monsterTypeWave3));
 		monsterWaves.Add (new MonsterWave (7, monsterTypeWave3));
 		monsterWaves.Add (new MonsterWave (5, monsterTypeWave1));
-			
-		setupBackground ();
+
+		base.setup ();
 	}
 
 
