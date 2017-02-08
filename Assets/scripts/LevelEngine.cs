@@ -21,8 +21,6 @@ public class LevelEngine : MonoBehaviour {
 	int currWave = 0;
 	// Use this for initialization
 	void Start () {
-
-
 	}
 
 	public void triggerWaves(){
@@ -40,7 +38,7 @@ public class LevelEngine : MonoBehaviour {
 	public int timeBetweenMonsters = 5;
 	private bool waveStarted =false;
 
-	private int waitBetweenMonsters = 150;
+	private int waitBetweenMonsters = 100;
 	private int currWait = 0;
 
 	// Update is called once per frame

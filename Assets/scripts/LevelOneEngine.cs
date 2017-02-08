@@ -9,6 +9,7 @@ public class LevelOneEngine : LevelEngine
 	public GameObject monsterTypeWave1;
 	public GameObject monsterTypeWave2;
 	public GameObject monsterTypeWave3;
+	public GameObject monsterTypeWave4;
 
 	void Start(){
 
@@ -31,6 +32,7 @@ public class LevelOneEngine : LevelEngine
 		waitTime = 10;
 
 		this.monsterWaves = new ArrayList ();
+		monsterWaves.Add (new MonsterWave (2, monsterTypeWave4));
 		monsterWaves.Add (new MonsterWave (10, monsterTypeWave1));
 		monsterWaves.Add (new MonsterWave (10, monsterTypeWave2));
 		monsterWaves.Add (new MonsterWave (4, monsterTypeWave3));
