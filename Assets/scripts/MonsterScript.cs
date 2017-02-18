@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MonsterScript : MonoBehaviour {
 
-	public int health = 100;
+	public int health;
 	public LevelEngine levelEngine;
 	public float speed = .01f;
 	public ArrayList targetPoints;
@@ -16,9 +16,15 @@ public class MonsterScript : MonoBehaviour {
 	public void decrementHealth(int damage){
 		health = health - damage;
 		if (health <= 0) {
-			Destroy (this.gameObject);
 			levelEngine.receiveGold (goldLevel);
+			destroyMonster ();
 		}
+	}
+
+
+	void destroyMonster(){
+		levelEngine.decrementActiveMonsters ();
+		Destroy (this.gameObject);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -29,7 +35,7 @@ public class MonsterScript : MonoBehaviour {
 		}
 		else if (other.gameObject.name.Equals("Castle(Clone)")){
 			levelEngine.reduceHealth (damage);
-			Destroy (this.gameObject);
+			destroyMonster ();
 		}
 	}
 
@@ -37,7 +43,7 @@ public class MonsterScript : MonoBehaviour {
 	void Start () {
 		animator = GetComponent<Animator> ();
 		triggerAnimationDirectionChange ((Vector3)targetPoints [0], (Vector3)targetPoints [1]);
-
+		levelEngine.incrementActiveMonsters ();
 	}
 	
 	// Update is called once per frame

@@ -19,6 +19,8 @@ public class LevelEngine : MonoBehaviour {
 
 	protected ArrayList targetPathPoints;
 
+	public int monstersOnBoard = 0;
+
 	// Use this for initialization
 	protected void setup () {
 		Debug.Log ("Start");
@@ -57,14 +59,14 @@ public class LevelEngine : MonoBehaviour {
 	}
 
 	private bool levelOver = false;
-
-
+	int waveNumber = 0;
 	private IEnumerator sendWaves(){
 		Debug.Log ("Sending waves: "+monsterWaves.Count);
 		for (int i = 0; i < monsterWaves.Count; i++) {
 			yield return new WaitForSeconds(timeBetweenWaves);
 			MonsterWave wave = (MonsterWave)monsterWaves [i];
 			int monstersSent = 0;
+			waveNumber = i + 1;
 			setTotalWaves (i+1);
 			while (monstersSent <= wave.totalMonsters) {
 				yield return new WaitForSeconds(timeBetweenMonsters);
@@ -78,8 +80,18 @@ public class LevelEngine : MonoBehaviour {
 
 	private void sendMonster(GameObject monster){
 		GameObject newMonster = Instantiate (monster, (Vector3)targetPathPoints[0], transform.rotation);
-		newMonster.GetComponent<MonsterScript> ().targetPoints = targetPathPoints;
-		newMonster.GetComponent<MonsterScript> ().levelEngine = this.gameObject.GetComponent<LevelEngine>();
+		newMonster.GetComponent<MonsterScript>().targetPoints = targetPathPoints;
+		newMonster.GetComponent<MonsterScript>().levelEngine = this.gameObject.GetComponent<LevelEngine>();
+	}
+
+	public void incrementActiveMonsters(){
+		monstersOnBoard++;
+	}
+
+	public void decrementActiveMonsters(){
+		monstersOnBoard--;
+		checkLosingGame ();
+		Debug.Log ("Monsters on board: " + monstersOnBoard);
 	}
 		
 	public void receiveGold(int value){
@@ -117,8 +129,13 @@ public class LevelEngine : MonoBehaviour {
 
 	public void checkLosingGame(){
 		if (health <= 0) {
-			this.transform.FindChild("LosingText").gameObject.SetActive(true);
+			this.transform.FindChild ("LosingText").gameObject.SetActive (true);
 			pause ();
+		} else if (health > 0 && monstersOnBoard == 0 && waveNumber == monsterWaves.Count) {
+			this.transform.FindChild ("LosingText").GetComponent<Text> ().text = "Game Over.\n  You Win!";
+			this.transform.FindChild ("LosingText").gameObject.SetActive (true);
+		} else {
+			Debug.Log ("health: " + health + " monsters: " + monstersOnBoard);
 		}
 	}
 }

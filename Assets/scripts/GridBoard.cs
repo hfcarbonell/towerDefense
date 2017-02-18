@@ -57,12 +57,12 @@ namespace AssemblyCSharp
 				for (int j = 0; j < numberColumns; j++) {
 					GridPoint currentpoint = new GridPoint (j, i);
 					if (!isOnPath (currentpoint) && !isCastle (currentpoint) ) {
-						GameObject obj = instantiator.buildSprite (grassSprite, new Vector3 (-camHalfWidth + j + grassSprite.GetComponent<SpriteRenderer> ().bounds.size.x / 2 - .05f, -camHalfHeight + i + grassSprite.GetComponent<SpriteRenderer> ().bounds.size.y / 2 - .05f, 0));
+						GameObject obj = instantiator.buildCanvasSprite (grassSprite, new Vector3 (-camHalfWidth + j + grassSprite.GetComponent<SpriteRenderer> ().bounds.size.x / 2 - .05f, -camHalfHeight + i + grassSprite.GetComponent<SpriteRenderer> ().bounds.size.y / 2 - .05f, 0));
 						if (isATower (currentpoint)) {
 							list.Add (obj);
 						}
 					} else if (isOnPath (currentpoint)) {
-						instantiator.buildSprite (pathSprite, new Vector3 (-camHalfWidth + j + pathSprite.GetComponent<SpriteRenderer> ().bounds.size.x / 2 - .05f, -camHalfHeight + i + pathSprite.GetComponent<SpriteRenderer> ().bounds.size.y / 2 - .05f, 0));
+						instantiator.buildCanvasSprite (pathSprite, new Vector3 (-camHalfWidth + j + pathSprite.GetComponent<SpriteRenderer> ().bounds.size.x / 2 - .05f, -camHalfHeight + i + pathSprite.GetComponent<SpriteRenderer> ().bounds.size.y / 2 - .05f, 0));
 					} 
 				}
 			}
@@ -76,8 +76,8 @@ namespace AssemblyCSharp
 			}
 
 			foreach(GameObject tower in list){
-				towerButton.transform.localScale = tower.transform.localScale;
-				instantiator.buildCanvasSprite (towerButton, tower.transform.position);
+				GameObject go = instantiator.buildCanvasSprite (towerButton, tower.transform.position);
+				go.GetComponent<RectTransform> ().localScale =  (new Vector2(15, 15));
 			}
 		}
 

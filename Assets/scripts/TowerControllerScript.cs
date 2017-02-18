@@ -61,6 +61,7 @@ public class TowerControllerScript : MonoBehaviour {
 
 		if (levelEngine.useGold(cost)) {
 			towerButton.image.sprite = tower.GetComponent<Button> ().image.sprite;
+			towerButton.transform.localScale = new Vector2 (.75f, 1.5f);
 			disableNewTowerBuilds ();
 			enableTowerState ();
 			toggleRing ();
@@ -112,13 +113,9 @@ public class TowerControllerScript : MonoBehaviour {
 
 	int currWait = 0;
 
-
 	void Update () {
-
 		if (currWait <= fireSpeed) {
-
 			currWait++;
-
 		} else {
 
 			if (ringActive == false && towerSet && monsterTarget != null) {
@@ -126,6 +123,5 @@ public class TowerControllerScript : MonoBehaviour {
 			}
 			currWait = 0;
 		}
-		
 	}
 }
